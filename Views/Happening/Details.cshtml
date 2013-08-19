@@ -1,0 +1,58 @@
+﻿@model _250ml_MVC4_2.Models.Happening
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Happening</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.StartDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StartDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EndDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EndDate)
+    </div>
+
+    <div class="display-label">
+         
+    <h2>Kommentare (@Model.Comments.Count)</h2>
+
+    </div>
+    <div class="display-field">
+        @{ int i = 1; }
+        @foreach(var comment in Model.Comments) {
+            <p>
+                #@i - @comment.UserProfile.UserName hat geschrieben:
+                <p>@comment.Content</p>
+            
+            </p>                           
+            i++;
+        }
+    </div>
+
+    @Html.Partial("AddCommentForm",Model)
+
+
+
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.HappeningId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
