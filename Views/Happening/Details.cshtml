@@ -39,7 +39,7 @@
             max_rating += rating.Value;
         }
 
-        max_rating /= Model.Ratings.Count;
+        if( max_rating > 0 ) { max_rating /= Model.Ratings.Count; }
 
    }
        
