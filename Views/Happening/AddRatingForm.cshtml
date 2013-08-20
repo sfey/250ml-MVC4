@@ -1,0 +1,18 @@
+﻿@model _250ml_MVC4_2.Models.Happening
+
+<h2>Bewertung abgeben</h2>
+
+@using (Html.BeginForm("AddRating", "Happening"))
+{
+        @Html.Hidden("UserId", WebSecurity.CurrentUserId)
+    @Html.Hidden("HappeningId", Model.HappeningId)
+  <select id="Value" name="Value">
+   <option value="" selected></option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+</select> 
+    <input type="submit" value="save" />
+}

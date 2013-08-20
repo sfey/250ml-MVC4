@@ -19,6 +19,7 @@ namespace _250ml_MVC4_2.Models
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Happening> Happenings { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
     }
 
     [Table("UserProfile")]
@@ -30,6 +31,7 @@ namespace _250ml_MVC4_2.Models
         public string UserName { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
     }
 
     public class RegisterExternalLoginModel

@@ -68,6 +68,19 @@ namespace _250ml_MVC4_2.Controllers
 
         [HttpPost]
         [Authorize]
+        public ActionResult AddRating(Rating rating)
+        {
+            if (ModelState.IsValid) {
+                db.Ratings.Add(rating);
+                db.SaveChanges();
+                return RedirectToAction("Details", new { id = rating.HappeningId });
+            }
+
+            return null;
+        }
+
+        [HttpPost]
+        [Authorize]
         public ActionResult AddComment(Comment comment)
         {
             if (ModelState.IsValid) {

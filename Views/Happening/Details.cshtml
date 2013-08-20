@@ -29,13 +29,31 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.EndDate)
     </div>
+</fieldset>
 
-    <div class="display-label">
+
+    <h2>Bewertung</h2>
+    @{
+        int max_rating = 0;
+        foreach(var rating in Model.Ratings) {
+            max_rating += rating.Value;
+        }
+
+        max_rating /= Model.Ratings.Count;
+
+   }
+          &Oslash;  @max_rating
+
+          <!-- schon gevotet? -->
+          @{ if( Model.Ratings.Where(m => m.UserId == WebSecurity.CurrentUserId).ToList().Count == 0 )
+             { @Html.Partial("AddRatingForm") }
+          }
+    
+
+
          
     <h2>Kommentare (@Model.Comments.Count)</h2>
 
-    </div>
-    <div class="display-field">
         @{ int i = 1; }
         @foreach(var comment in Model.Comments) {
             <p>
@@ -45,7 +63,6 @@
             </p>                           
             i++;
         }
-    </div>
 
     @{ 
         if ( User.Identity.IsAuthenticated ) { @Html.Partial("AddCommentForm", Model); }
@@ -53,7 +70,6 @@
 
 
 
-</fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.HappeningId }) |
     @Html.ActionLink("Back to List", "Index")
