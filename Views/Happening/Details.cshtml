@@ -32,7 +32,7 @@
 </fieldset>
 
 
-    <h2>Bewertung</h2>
+    <h2>Bewertung (@Model.Ratings.Count)</h2>
     @{
         int max_rating = 0;
         foreach(var rating in Model.Ratings) {
@@ -42,7 +42,9 @@
         max_rating /= Model.Ratings.Count;
 
    }
-          &Oslash;  @max_rating
+       
+
+          <div id="star" data-score="@max_rating"></div>
 
           <!-- schon gevotet? -->
           @{ if( Model.Ratings.Where(m => m.UserId == WebSecurity.CurrentUserId).ToList().Count == 0 )
@@ -74,3 +76,19 @@
     @Html.ActionLink("Edit", "Edit", new { id=Model.HappeningId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+@section scripts {
+     <script src="/Scripts/jquery.raty.min.js"></script>
+     <!-- to do: in .js packen -->
+     <script>
+         $('#star').raty({
+             score: function () {
+                 return $(this).attr('data-score');
+             },
+             path: '/Images/raty',
+             number: 5,
+             readOnly: true,
+         });
+     </script>
+}
