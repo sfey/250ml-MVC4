@@ -20,7 +20,10 @@ namespace _250ml_MVC4_2.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Happenings.ToList());
+            db.Happenings.ToList();
+
+
+           return View(db.Happenings.ToList());
         }
 
         //
@@ -39,6 +42,7 @@ namespace _250ml_MVC4_2.Controllers
         //
         // GET: /Happening/Create
 
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -48,6 +52,7 @@ namespace _250ml_MVC4_2.Controllers
         // POST: /Happening/Create
 
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Happening happening)
         {
             if (ModelState.IsValid)
@@ -62,6 +67,7 @@ namespace _250ml_MVC4_2.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public ActionResult AddComment(Comment comment)
         {
             if (ModelState.IsValid) {
@@ -81,6 +87,7 @@ namespace _250ml_MVC4_2.Controllers
         //
         // GET: /Happening/Edit/5
 
+        [Authorize]
         public ActionResult Edit(int id = 0)
         {
             Happening happening = db.Happenings.Find(id);
@@ -95,6 +102,7 @@ namespace _250ml_MVC4_2.Controllers
         // POST: /Happening/Edit/5
 
         [HttpPost]
+        [Authorize]
         public ActionResult Edit(Happening happening)
         {
             if (ModelState.IsValid)
@@ -109,6 +117,7 @@ namespace _250ml_MVC4_2.Controllers
         //
         // GET: /Happening/Delete/5
 
+        [Authorize]
         public ActionResult Delete(int id = 0)
         {
             Happening happening = db.Happenings.Find(id);
@@ -123,6 +132,7 @@ namespace _250ml_MVC4_2.Controllers
         // POST: /Happening/Delete/5
 
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             Happening happening = db.Happenings.Find(id);

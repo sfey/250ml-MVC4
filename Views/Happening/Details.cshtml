@@ -47,7 +47,9 @@
         }
     </div>
 
-    @Html.Partial("AddCommentForm",Model)
+    @{ 
+        if ( User.Identity.IsAuthenticated ) { @Html.Partial("AddCommentForm", Model); }
+    }
 
 
 
