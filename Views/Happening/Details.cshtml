@@ -59,18 +59,17 @@
         @{ int i = 1; }
         @foreach(var comment in Model.Comments) {
             <p>
-                #@i - @comment.UserProfile.UserName hat geschrieben:
+                #@i - @comment.UserProfile.UserName hat am @comment.CreationDate.ToString("dd/MM/yy") um @comment.CreationDate.ToString("hh/mm") Uhr geschrieben:
                 <p>@comment.Content</p>
             
             </p>                           
             i++;
         }
 
-    @{ 
-        if ( User.Identity.IsAuthenticated ) { @Html.Partial("AddCommentForm", Model); }
+    @if( User.Identity.IsAuthenticated )
+    {
+        @Html.Partial("AddCommentForm", Model);
     }
-
-
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.HappeningId }) |

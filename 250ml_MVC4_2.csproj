@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201308200853310_AddRatingToHappening.Designer.cs">
       <DependentUpon>201308200853310_AddRatingToHappening.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201308211436145_AddDateToComment.cs" />
+    <Compile Include="Migrations\201308211436145_AddDateToComment.Designer.cs">
+      <DependentUpon>201308211436145_AddDateToComment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -351,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201308200853310_AddRatingToHappening.resx">
       <DependentUpon>201308200853310_AddRatingToHappening.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201308211436145_AddDateToComment.resx">
+      <DependentUpon>201308211436145_AddDateToComment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

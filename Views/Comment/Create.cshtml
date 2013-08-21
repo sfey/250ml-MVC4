@@ -21,12 +21,18 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.CreationDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreationDate)
+            @Html.ValidationMessageFor(model => model.CreationDate)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.UserId, "UserProfile")
         </div>
         <div class="editor-field">
-            @{ string CurrentUserId = ViewBag.UserId.ToString(); }
-            @Html.Hidden("UserId", CurrentUserId)
-
+            @Html.DropDownList("UserId", String.Empty)
             @Html.ValidationMessageFor(model => model.UserId)
         </div>
 
@@ -49,6 +55,5 @@
 </div>
 
 @section Scripts {
-    @* testkommentar *@
     @Scripts.Render("~/bundles/jqueryval")
 }

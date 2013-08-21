@@ -6,12 +6,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using _250ml_MVC4_2.Models;
-using WebMatrix.WebData;
-using _250ml_MVC4_2.Filters;
 
 namespace _250ml_MVC4_2.Controllers
 {
-    [InitializeSimpleMembership]
     public class CommentController : Controller
     {
         private UsersContext db = new UsersContext();
@@ -43,21 +40,10 @@ namespace _250ml_MVC4_2.Controllers
 
         public ActionResult Create()
         {
-            //ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName");
-
-            ViewBag.UserId = WebSecurity.CurrentUserId;
-
-            
-
-            if (ViewBag.UserId < 1) { ViewBag.UserId = 1; } // wenn nicht eingeloggt = -1; TO DO add userId1=Gast o.ä.
-            //new SelectList(db.UserProfiles, "UserId", "UserName");
-
-
+            ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName");
             ViewBag.HappeningId = new SelectList(db.Happenings, "HappeningId", "Name");
             return View();
         }
-
-
 
         //
         // POST: /Comment/Create
@@ -72,10 +58,7 @@ namespace _250ml_MVC4_2.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName", comment.UserId);
-            ViewBag.UserId = WebSecurity.CurrentUserId;
-            if (ViewBag.UserId < 1) { ViewBag.UserId = 1; } // wenn nicht eingeloggt = -1; TO DO add userId1=Gast o.ä.
-
+            ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName", comment.UserId);
             ViewBag.HappeningId = new SelectList(db.Happenings, "HappeningId", "Name", comment.HappeningId);
             return View(comment);
         }
@@ -90,7 +73,7 @@ namespace _250ml_MVC4_2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = comment.UserId; // new SelectList(db.UserProfiles, "UserId", "UserName", comment.UserId);
+            ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName", comment.UserId);
             ViewBag.HappeningId = new SelectList(db.Happenings, "HappeningId", "Name", comment.HappeningId);
             return View(comment);
         }
@@ -107,7 +90,7 @@ namespace _250ml_MVC4_2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = comment.UserId; // new SelectList(db.UserProfiles, "UserId", "UserName", comment.UserId);
+            ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName", comment.UserId);
             ViewBag.HappeningId = new SelectList(db.Happenings, "HappeningId", "Name", comment.HappeningId);
             return View(comment);
         }

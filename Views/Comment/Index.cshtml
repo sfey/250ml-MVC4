@@ -15,6 +15,9 @@
             @Html.DisplayNameFor(model => model.Content)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.UserProfile.UserName)
         </th>
         <th>
@@ -27,6 +30,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Content)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreationDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.UserProfile.UserName)

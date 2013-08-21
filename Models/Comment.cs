@@ -9,6 +9,7 @@ namespace _250ml_MVC4_2.Models
     {
         public int CommentId { get; set; }
         public string Content { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public int UserId { get; set; }
         public virtual UserProfile UserProfile { get; set; }

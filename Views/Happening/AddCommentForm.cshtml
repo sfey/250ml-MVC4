@@ -2,9 +2,11 @@
 
 <h2>Rating schreiben</h2>
 
-@using( Html.BeginForm("AddComment", "Happening") ) {
+@using (Html.BeginForm("AddComment", "Happening"))
+{
     @Html.TextArea("Content", String.Empty)
-    @Html.Hidden("UserId",WebSecurity.CurrentUserId)
-    @Html.Hidden("HappeningId",Model.HappeningId)
+    @Html.Hidden("UserId", WebSecurity.CurrentUserId)
+    @Html.Hidden("CreationDate", DateTime.Now.ToString("dd/MM/y HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US")) )
+    @Html.Hidden("HappeningId", Model.HappeningId)
     <input type="submit" value="save" />
 }

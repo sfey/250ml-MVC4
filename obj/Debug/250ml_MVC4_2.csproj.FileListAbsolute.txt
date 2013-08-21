@@ -74,3 +74,4 @@ c:\users\a\documents\visual studio 2010\Projects\250ml_MVC4_2\250ml_MVC4_2\obj\D
 c:\users\a\documents\visual studio 2010\Projects\250ml_MVC4_2\250ml_MVC4_2\obj\Debug\_250ml_MVC4_2.Migrations.AddHappening.resources
 C:\Users\a\documents\visual studio 2010\Projects\250ml_MVC4_2\250ml_MVC4_2\obj\Debug\_250ml_MVC4_2.Migrations.AddRating.resources
 C:\Users\a\documents\visual studio 2010\Projects\250ml_MVC4_2\250ml_MVC4_2\obj\Debug\_250ml_MVC4_2.Migrations.AddRatingToHappening.resources
+C:\Users\a\documents\visual studio 2010\Projects\250ml_MVC4_2\250ml_MVC4_2\obj\Debug\_250ml_MVC4_2.Migrations.AddDateToComment.resources
