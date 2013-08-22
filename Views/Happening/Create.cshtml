@@ -1,64 +1,40 @@
 ﻿@model _250ml_MVC4_2.Models.Happening
 
-@{
-    ViewBag.Title = "Create";
-}
+<h2>Veranstaltung erstellen</h2>
 
-@ViewBag.Action
-
-
-
-
-
-<h2>Create</h2>
-
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Create", "Happening", FormMethod.Post, new { @class = "col-md-12" }))
+{
+    
     @Html.ValidationSummary(true)
+   
 
-    <fieldset>
-        <legend>Happening</legend>
+    <div class="form-group">
+        <div class="col-md-12">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.StartDate,"Beginn",null)
+            @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control" })
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.EndDate,"Ende",null)
+            @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control" })
+        </div>
+    </div>
+    
+    @Html.Hidden("UserId",WebSecurity.CurrentUserId)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+    <div class="form-group">
+        <div class="col-md-6">
+            <button class="btn btn-success" type="submit" value="Create" style="margin-top:20px;">Speichern</button>
+            @Html.ActionLink("zurück", "Index", null, new { @class = "btn btn-info", style = "margin-top:20px;" })
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.StartDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.StartDate)
-            @Html.ValidationMessageFor(model => model.StartDate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EndDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EndDate)
-            @Html.ValidationMessageFor(model => model.EndDate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserId, "Owner")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("UserId", String.Empty)
-            @Html.ValidationMessageFor(model => model.UserId)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
+    </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/timepicker")

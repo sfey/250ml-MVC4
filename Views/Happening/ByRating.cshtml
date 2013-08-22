@@ -5,14 +5,14 @@
     @Html.ActionLink("neue Veranstaltung erstellen", "Create", null, new { @class = "btn btn-info" })
 }
 
-<h2>Alle Veranstaltungen</h2>
+<h2>Alle Veranstaltungen mit einer Bewertung von @TempData["rating"] oder höher</h2>
+
+@Html.Partial("ByRatingForm")
 
 @if (TempData["error"] != null)
 {
     <div class="alert alert-danger">Fehler: @TempData["error"]</div>
 }
-
-@Html.Partial("ByRatingForm")
 
 <table class="table">
     <tr>

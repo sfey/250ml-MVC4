@@ -1,46 +1,43 @@
 ﻿@model _250ml_MVC4_2.Models.Happening
 
-@{
-    ViewBag.Title = "Delete";
-}
+<h2>Veranstaltung löschen</h2>
+<h3>Sind sie sich sicher?</h3>
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<fieldset>
-    <legend>Happening</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.StartDate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.StartDate)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.EndDate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.EndDate)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Owner.UserName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Owner.UserName)
-    </div>
-</fieldset>
 @using (Html.BeginForm()) {
     <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
+        <button class="btn btn-danger" type="submit">löschen</button>
+        @Html.ActionLink("abbrechen", "Index", null, new { @class="btn btn-info" })
     </p>
+}
+
+<fieldset>
+    <legend>Veranstaltungs-Details</legend>
+
+    <label>Veranstaltungsname</label>
+    <p>@Model.Name</p>
+
+    <label>Zeitraum</label>
+    <p>von @Model.StartDate.ToString("dd/MM/yy, HH:mm") Uhr<br />
+    bis @Model.EndDate.ToString("dd/MM/yy, HH:mm") Uhr</p>
+
+    <label>Veranstalter</label>
+    <p>@Model.Owner.UserName</p>
+
+    <label>Durchschnittliche Bewertung</label>
+    (bei @Model.Ratings.Count 
+        @if(@Model.Ratings.Count>1)
+        {
+            @:Bewertungen)
+        }
+        else
+        {
+            @:Bewertung)
+        }
+    <div id="star" style="margin-bottom: 20px;" data-score="@Model.AverageRating()"></div> 
+</fieldset>
+
+@section scripts
+{
+    <script src="/Scripts/jquery.raty.min.js"></script>
+    <script src="/Scripts/config/raty.js"></script>
 }

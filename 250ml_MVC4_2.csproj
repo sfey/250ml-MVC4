@@ -285,6 +285,7 @@
     <Content Include="Images\raty\star-half.png" />
     <Content Include="Images\raty\star-off.png" />
     <Content Include="Images\raty\star-on.png" />
+    <Content Include="Scripts\config\raty.js" />
     <Content Include="Scripts\config\timepicker-addon.js" />
     <Content Include="Scripts\jquery-2.0.3-vsdoc.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
@@ -432,6 +433,8 @@
     <Content Include="Views\Happening\Own.cshtml" />
     <Content Include="Views\Shared\UserProfilePartial.cshtml" />
     <Content Include="Views\Happening\CommentEntry.cshtml" />
+    <Content Include="Views\Happening\ByRating.cshtml" />
+    <Content Include="Views\Happening\ByRatingForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

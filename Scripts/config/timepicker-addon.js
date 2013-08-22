@@ -43,11 +43,9 @@ jQuery(function($){
 
 
 $('#StartDate').datetimepicker({
-   showOn: 'button',
    dateFormat: 'dd/mm/yy'
 });
 
 $('#EndDate').datetimepicker({
-    showOn: 'button',
     dateFormat: 'dd/mm/yy'
 });

@@ -30,6 +30,17 @@ namespace _250ml_MVC4_2.Controllers
             return View(OwnHappenings.ToList());
         }
 
+        public ActionResult ByRating(int id = 0)
+        {
+            if (id == 0) {
+                return RedirectToAction("Index");
+            }
+
+            TempData["rating"] = id;
+            var happenings = db.Happenings.Where(m => m.Ratings.Sum(x => x.Value) >= id);
+            return View(happenings.ToList());
+        }
+
         public ActionResult Details(int id = 0)
         {
             Happening happening = db.Happenings.Find(id);

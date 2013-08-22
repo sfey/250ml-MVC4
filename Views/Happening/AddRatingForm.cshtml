@@ -3,7 +3,7 @@
 @if (!Model.HasRated(WebSecurity.CurrentUserId) && Request.IsAuthenticated)
 {
     <div class="well well-sm">
-        <h3>Veranstaltung bewerten</h3>
+        <h4>Veranstaltung bewerten</h4>
         @using (Html.BeginForm("Create", "Rating", FormMethod.Post, new { @class = "form-inline" }))
         {
             @Html.Hidden("UserId", WebSecurity.CurrentUserId)

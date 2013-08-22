@@ -1,69 +1,43 @@
 ﻿@model _250ml_MVC4_2.Models.Comment
 
 @{
-    ViewBag.Title = "Edit";
-}
+    var ReferrerAction = TempData["action"] as string;
+    var ReferrerController = TempData["controller"] as string;
+    var ReferrerId = Convert.ToInt32(TempData["id"]);
 
-@{
     // die Variablen müssen hier noch einmal explizit gespeichert werden
     // damit sie beim POST nicht verloren gehen 
-    
-    TempData["action"] = TempData["action"];
-    TempData["controller"] = TempData["controller"];
-    TempData["id"] = TempData["id"]; 
+
+    TempData["action"] = ReferrerAction;
+    TempData["controller"] = ReferrerController;
+    TempData["id"] = ReferrerId;
     }
 
-<h2>Edit</h2>
+<h2>Kommentar bearbeiten</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Edit", "Comment", FormMethod.Post, new { @class = "col-md-12" }))
+{
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Comment</legend>
+    <div class="form-group">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.Content,"Text",null)
+            @Html.TextAreaFor(m => m.Content, new { @class = "form-control" })
+        </div>
+    </div>
+    
+    @Html.HiddenFor(m => m.CommentId)
+    @Html.HiddenFor(m => m.HappeningId)
+    @Html.Hidden("CreationDate", Model.CreationDate.ToString("dd/MM/yy HH:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US")) )
+    @Html.HiddenFor(m => m.UserId)
 
-        @Html.HiddenFor(model => model.CommentId)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Content)
+    <div class="form-group">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-success" value="Save">speichern</button>
+            @Html.ActionLink("zurück", ReferrerAction, ReferrerController, new { Id = ReferrerId }, new { @class = "btn btn-info" })
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Content)
-            @Html.ValidationMessageFor(model => model.Content)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreationDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreationDate)
-            @Html.ValidationMessageFor(model => model.CreationDate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserId, "UserProfile")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("UserId", String.Empty)
-            @Html.ValidationMessageFor(model => model.UserId)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HappeningId, "Happening")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("HappeningId", String.Empty)
-            @Html.ValidationMessageFor(model => model.HappeningId)
-        </div>
-
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+    </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

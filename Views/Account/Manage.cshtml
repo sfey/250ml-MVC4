@@ -1,31 +1,14 @@
 ﻿@model _250ml_MVC4_2.Models.LocalPasswordModel
-@{
-    ViewBag.Title = "Konto verwalten";
-}
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
+<h2>Konto verwalten</h2>
 
-<p class="message-success">@ViewBag.StatusMessage</p>
-
-<p>Angemeldet als <strong>@User.Identity.Name</strong>.</p>
-
-@if (ViewBag.HasLocalPassword)
+@if (@ViewBag.StatusMessage != "")
 {
-    @Html.Partial("_ChangePasswordPartial")
-}
-else
-{ 
-    @Html.Partial("_SetPasswordPartial")
+    <div class="alert alert-success">@ViewBag.StatusMessage</div>
 }
 
-<section id="externalLogins">
-    @Html.Action("RemoveExternalLogins")
 
-    <h3>Externe Anmeldung hinzufügen</h3>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
+@Html.Partial("_ChangePasswordPartial")
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
