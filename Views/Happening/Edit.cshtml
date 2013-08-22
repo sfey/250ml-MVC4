@@ -38,6 +38,14 @@
             @Html.ValidationMessageFor(model => model.EndDate)
         </div>
 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserId, "Owner")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("UserId", String.Empty)
+            @Html.ValidationMessageFor(model => model.UserId)
+        </div>
+
         <p>
             <input type="submit" value="Save" />
         </p>

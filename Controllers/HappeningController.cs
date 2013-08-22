@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using _250ml_MVC4_2.Models;
+using WebMatrix.WebData;
 using _250ml_MVC4_2.Filters;
+using _250ml_MVC4_2.Helpers;
 
 namespace _250ml_MVC4_2.Controllers
 {
@@ -15,137 +14,124 @@ namespace _250ml_MVC4_2.Controllers
     {
         private UsersContext db = new UsersContext();
 
-        //
-        // GET: /Happening/
-
         public ActionResult Index()
         {
-            db.Happenings.ToList();
-
-
-           return View(db.Happenings.ToList());
+            var happenings = db.Happenings.Include(h => h.Owner);
+            return View(happenings.ToList());
         }
 
-        //
-        // GET: /Happening/Details/5
+        [Authorize(Roles = "Verwalter")]
+        public ActionResult Own()
+        {
+            // aktuelle UserId bestimmen
+            int CurrentUserId = WebSecurity.CurrentUserId;
+
+            var OwnHappenings = db.Happenings.Where(m => m.UserId == CurrentUserId);
+            return View(OwnHappenings.ToList());
+        }
 
         public ActionResult Details(int id = 0)
         {
             Happening happening = db.Happenings.Find(id);
             if (happening == null)
             {
-                return HttpNotFound();
+                TempData["error"] = "Es existiert keine Veranstaltung mit dieser Id!";
+                return RedirectToAction("Index");
             }
             return View(happening);
         }
 
-        //
-        // GET: /Happening/Create
-
-        [Authorize]
+        [Authorize(Roles = "Verwalter,Administrator")]
         public ActionResult Create()
         {
+            // merken, von wo die Action aufgerufen wurde und entsprechend zurückspringen
+            TempData["action"] = ReferrerHelper.ReferrerAction();
+
+            ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName");
             return View();
         }
 
-        //
-        // POST: /Happening/Create
-
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Verwalter,Administrator")]
         public ActionResult Create(Happening happening)
         {
             if (ModelState.IsValid)
             {
                 db.Happenings.Add(happening);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction((string)TempData["action"]);
             }
 
+            ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName", happening.UserId);
             return View(happening);
         }
 
-
-        [HttpPost]
-        [Authorize]
-        public ActionResult AddRating(Rating rating)
-        {
-            if (ModelState.IsValid) {
-                db.Ratings.Add(rating);
-                db.SaveChanges();
-                return RedirectToAction("Details", new { id = rating.HappeningId });
-            }
-
-            return null;
-        }
-
-        [HttpPost]
-        [Authorize]
-        public ActionResult AddComment(Comment comment)
-        {
-            if (ModelState.IsValid) {
-
-                db.Comments.Add(comment);
-                db.SaveChanges();
-                return RedirectToAction("Details", new { id = comment.HappeningId });
-
-               /* TempData["model"] = comment; 
-                return RedirectToAction("Create", "Comment", comment); */
-            }
-            
-            
-            return RedirectToAction("Create", "Comment", comment);
-        }
-
-        //
-        // GET: /Happening/Edit/5
-
-        [Authorize]
+        [Authorize(Roles = "Verwalter,Administrator")]
         public ActionResult Edit(int id = 0)
         {
             Happening happening = db.Happenings.Find(id);
+
+            // wenn der User nicht Owner ist Fehlermeldung anzeigen
+            // und Zugriff verweigern
+            if(!User.IsInRole("Administrator")) {
+                if (!happening.IsOwner(WebSecurity.CurrentUserId))
+                {
+                    TempData["error"] = "Sie sind nicht berechtigt diese Veranstaltung zu bearbeiten!";
+                    return RedirectToAction("Index");
+                }
+            }
+
+            // falls keine Veranstaltung mit dieser Id existiert 
+            // Fehler anzeigen
             if (happening == null)
             {
-                return HttpNotFound();
+                TempData["error"] = "Es existiert keine Veranstaltung mit dieser Id!";
+                return RedirectToAction("Index");
             }
+            ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName", happening.UserId);
             return View(happening);
         }
 
-        //
-        // POST: /Happening/Edit/5
-
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Verwalter,Administrator")]
         public ActionResult Edit(Happening happening)
         {
+            // wenn der User nicht Owner ist Fehlermeldung anzeigen
+            // und Zugriff verweigern
+            if (!User.IsInRole("Administrator"))
+            {
+                if (!happening.IsOwner(WebSecurity.CurrentUserId))
+                {
+                    TempData["error"] = "Sie sind nicht berechtigt diese Veranstaltung zu bearbeiten!";
+                    return RedirectToAction("Index");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(happening).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName", happening.UserId);
             return View(happening);
         }
 
-        //
-        // GET: /Happening/Delete/5
-
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int id = 0)
         {
             Happening happening = db.Happenings.Find(id);
+
             if (happening == null)
             {
-                return HttpNotFound();
+                TempData["error"] = "Es existiert keine Veranstaltung mit dieser Id!";
+                return RedirectToAction("Index");
             }
             return View(happening);
         }
 
-        //
-        // POST: /Happening/Delete/5
-
         [HttpPost, ActionName("Delete")]
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public ActionResult DeleteConfirmed(int id)
         {
             Happening happening = db.Happenings.Find(id);
@@ -154,6 +140,24 @@ namespace _250ml_MVC4_2.Controllers
             return RedirectToAction("Index");
         }
 
+        //[HttpPost]
+        //[Authorize]
+        //public ActionResult Rate(Rating rating)
+        //{
+        //    db.Ratings.Add(rating);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Details", new { id = rating.HappeningId });
+        //}
+
+        //[HttpPost]
+        //[Authorize]
+        //public ActionResult Commentate(Comment comment)
+        //{
+        //    db.Comments.Add(comment);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Details", new { id = comment.HappeningId });
+        //}
+        
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

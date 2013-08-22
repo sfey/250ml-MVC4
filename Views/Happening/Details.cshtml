@@ -1,80 +1,64 @@
 ﻿@model _250ml_MVC4_2.Models.Happening
 
-@{
-    ViewBag.Title = "Details";
+@Html.ActionLink("zurück", "Index", null, new { @class = "btn btn-info" })
+
+@if (User.IsInRole("Verwalter") && Model.IsOwner(WebSecurity.CurrentUserId) )
+{
+    @Html.ActionLink("bearbeiten", "Edit", new { id = Model.HappeningId }, new { @class = "btn btn-warning" })
 }
 
-<h2>Details</h2>
+@if( User.IsInRole("Administrator"))
+{
+    @Html.ActionLink("löschen", "Delete", new { id = Model.HappeningId }, new { @class = "btn btn-danger" })
+}
+
+<h2>@Model.Name</h2>
+
+
+
+
 
 <fieldset>
-    <legend>Happening</legend>
+    <legend>Veranstaltungs-Details</legend>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
+    <label>Zeitraum</label>
+    <p>von @Model.StartDate.ToString("dd/MM/yy, HH:mm") Uhr<br />
+    bis @Model.EndDate.ToString("dd/MM/yy, HH:mm") Uhr</p>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.StartDate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.StartDate)
-    </div>
+    <label>Veranstalter</label>
+    <p>@Model.Owner.UserName</p>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.EndDate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.EndDate)
-    </div>
+    <label>Durchschnittliche Bewertung</label>
+    (bei @Model.Ratings.Count 
+        @if(@Model.Ratings.Count>1)
+        {
+            @:Bewertungen)
+        }
+        else
+        {
+            @:Bewertung)
+        }
+    <div id="star" style="margin-bottom: 20px;" data-score="@Model.AverageRating()"></div> 
+</fieldset>
+
+@Html.Partial("AddRatingForm")
+
+<fieldset>
+    <legend>Kommentare</legend>
+
+    @foreach (var comment in Model.Comments)
+    {
+        @Html.Partial("CommentEntry", comment)
+    }
 </fieldset>
 
 
-    <h2>Bewertung (@Model.Ratings.Count)</h2>
-    @{
-        int max_rating = 0;
-        foreach(var rating in Model.Ratings) {
-            max_rating += rating.Value;
-        }
 
-        if( max_rating > 0 ) { max_rating /= Model.Ratings.Count; }
-
-   }
-       
-
-          <div id="star" data-score="@max_rating"></div>
-
-          <!-- schon gevotet? -->
-          @{ if( Model.Ratings.Where(m => m.UserId == WebSecurity.CurrentUserId).ToList().Count == 0 )
-             { @Html.Partial("AddRatingForm") }
-          }
-    
+@Html.Partial("AddCommentForm")
 
 
-         
-    <h2>Kommentare (@Model.Comments.Count)</h2>
 
-        @{ int i = 1; }
-        @foreach(var comment in Model.Comments) {
-            <p>
-                #@i - @comment.UserProfile.UserName hat am @comment.CreationDate.ToString("dd/MM/yy") um @comment.CreationDate.ToString("hh/mm") Uhr geschrieben:
-                <p>@comment.Content</p>
-            
-            </p>                           
-            i++;
-        }
 
-    @if( User.Identity.IsAuthenticated )
-    {
-        @Html.Partial("AddCommentForm", Model);
-    }
-
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.HappeningId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
 
 @section scripts {
@@ -90,4 +74,4 @@
              readOnly: true,
          });
      </script>
-}
+     }

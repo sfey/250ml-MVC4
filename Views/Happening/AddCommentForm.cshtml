@@ -1,12 +1,16 @@
 ﻿@model _250ml_MVC4_2.Models.Happening
 
-<h2>Rating schreiben</h2>
-
-@using (Html.BeginForm("AddComment", "Happening"))
+@if (Request.IsAuthenticated && !Model.IsOwner(WebSecurity.CurrentUserId) )
 {
-    @Html.TextArea("Content", String.Empty)
-    @Html.Hidden("UserId", WebSecurity.CurrentUserId)
-    @Html.Hidden("CreationDate", DateTime.Now.ToString("dd/MM/y HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US")) )
-    @Html.Hidden("HappeningId", Model.HappeningId)
-    <input type="submit" value="save" />
+    <div class="well col-md-12">
+        <h3>Kommentar schreiben</h3>
+        @using (Html.BeginForm("Create", "Comment"))
+        {
+            @Html.TextArea("Content", String.Empty, new { @class = "form-control", @rows = "3" })
+            @Html.Hidden("UserId", WebSecurity.CurrentUserId)
+            @Html.Hidden("CreationDate", DateTime.Now.ToString("dd/MM/y HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))
+            @Html.Hidden("HappeningId", Model.HappeningId)
+            <button class="btn btn-info" type="submit" style="margin-top:5px;">posten</button>
+        }
+    </div>
 }

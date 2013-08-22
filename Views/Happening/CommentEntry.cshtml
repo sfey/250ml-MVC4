@@ -1,0 +1,19 @@
+﻿@model _250ml_MVC4_2.Models.Comment
+<blockquote>
+    <p>
+        @Model.Content
+    </p>
+    <small>
+        <strong>@Model.UserProfile.UserName</strong> 
+        am @Model.CreationDate.ToString("dd/MM/yy") 
+        um @Model.CreationDate.ToString("HH:mm") Uhr
+    </small>
+        @if( User.IsInRole("Administrator") || Model.IsOwner( WebSecurity.CurrentUserId ) )
+        {
+            @Html.ActionLink("bearbeiten", "Edit", "Comment", new { id = @Model.CommentId }, new { @class = "btn btn-warning btn-xs" })
+        }
+        @if( User.IsInRole("Administrator"))
+        {
+            @Html.ActionLink("löschen", "Delete", "Comment", new { id = @Model.CommentId }, new { @class = "btn btn-danger btn-xs" })
+        }
+</blockquote>

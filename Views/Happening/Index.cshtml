@@ -1,48 +1,44 @@
 ﻿@model IEnumerable<_250ml_MVC4_2.Models.Happening>
 
-@{
-    ViewBag.Title = "Index";
+@if (User.IsInRole("Verwalter"))
+{
+    @Html.ActionLink("neue Veranstaltung erstellen", "Create", null, new { @class = "btn btn-info" })
 }
 
-<h2>Index</h2>
+<h2>Alle Veranstaltungen</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger">Fehler: @TempData["error"]</div>
+}
+
+<table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
+        <th>Name</th>
+        <th>Zeitraum</th>
+        <th>Veranstalter</th>
         <th></th>
     </tr>
 
-  
-
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.HappeningId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.HappeningId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.HappeningId })
-        </td>
-    </tr>
-}
-
+    @foreach (var happening in Model)
+    { 
+        <tr>
+            <td>@Html.ActionLink(@happening.Name, "Details", new { id = happening.HappeningId })</td>
+            <td>
+                von @happening.StartDate.ToString("dd.MM.yy")
+                bis @happening.EndDate.ToString("dd.MM.yy")
+            </td>
+            <td>@Html.DisplayFor(modelItem => happening.Owner.UserName)</td>
+            <td style="text-align: right;">
+                @if (User.IsInRole("Verwalter") && @happening.IsOwner(WebSecurity.CurrentUserId))
+                {
+                    @Html.ActionLink("bearbeiten", "Edit", new { id = happening.HappeningId }, new { @class = "btn btn-warning" })
+                }
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("löschen", "Delete", new { id = happening.HappeningId }, new { @class = "btn btn-danger" })
+                }
+            </td>
+        </tr>
+    }
 </table>

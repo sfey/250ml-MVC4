@@ -1,2 +1,15 @@
 ﻿<!-- now als DateTime im SQL Format -->
+@if(TempData["error"] != null){
+    <div class="alert alert-danger">Fehler: @TempData["error"]</div>
+    }
+
+
 @DateTime.Now.ToString("dd/MM/y HH:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+@foreach (var role in Roles.GetRolesForUser()) { 
+     @role
+}
+
+@if(User.IsInRole("Verwalter")) {
+     @: User ist Verwalter! 
+}

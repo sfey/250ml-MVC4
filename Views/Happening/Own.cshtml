@@ -1,0 +1,35 @@
+﻿@model IEnumerable<_250ml_MVC4_2.Models.Happening>
+
+@Html.ActionLink("neue Veranstaltung erstellen", "Create", null, new { @class = "btn btn-info" } )
+
+<h2>Meine Veranstaltungen</h2>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th colspan="2">Zeitraum</th>
+    </tr>
+
+    @foreach (var happening in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(
+                    @happening.Name,
+                    "Details",
+                    new { id = happening.HappeningId })
+            </td>
+            <td>
+                von @happening.StartDate.ToString("dd.MM.yy")
+                bis @happening.EndDate.ToString("dd.MM.yy")
+            </td>
+            <td style="text-align: right;">
+                @Html.ActionLink("bearbeiten", "Edit", new { id = happening.HappeningId }, new { @class = "btn btn-warning" })
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("löschen", "Delete", new { id = happening.HappeningId }, new { @class = "btn btn-danger" })
+                }
+            </td>
+        </tr>
+    }
+</table>

@@ -32,6 +32,7 @@ namespace _250ml_MVC4_2.Models
 
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
+        public virtual ICollection<Happening> Happenings { get; set; }
     }
 
     public class RegisterExternalLoginModel

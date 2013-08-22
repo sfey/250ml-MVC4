@@ -16,5 +16,10 @@ namespace _250ml_MVC4_2.Models
 
         public int HappeningId { get; set; }
         public virtual Happening Happening { get; set; }
+
+        public bool IsOwner(int UserId)
+        {
+            return (this.UserId == UserId);
+        }
     }
 }

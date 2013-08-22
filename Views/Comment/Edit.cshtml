@@ -4,6 +4,15 @@
     ViewBag.Title = "Edit";
 }
 
+@{
+    // die Variablen müssen hier noch einmal explizit gespeichert werden
+    // damit sie beim POST nicht verloren gehen 
+    
+    TempData["action"] = TempData["action"];
+    TempData["controller"] = TempData["controller"];
+    TempData["id"] = TempData["id"]; 
+    }
+
 <h2>Edit</h2>
 
 @using (Html.BeginForm()) {

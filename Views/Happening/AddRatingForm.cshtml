@@ -1,18 +1,23 @@
 ﻿@model _250ml_MVC4_2.Models.Happening
 
-<h2>Bewertung abgeben</h2>
-
-@using (Html.BeginForm("AddRating", "Happening"))
+@if (!Model.HasRated(WebSecurity.CurrentUserId) && Request.IsAuthenticated)
 {
-        @Html.Hidden("UserId", WebSecurity.CurrentUserId)
-    @Html.Hidden("HappeningId", Model.HappeningId)
-  <select id="Value" name="Value">
-   <option value="" selected></option>
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
-</select> 
-    <input type="submit" value="save" />
+    <div class="well well-sm">
+        <h3>Veranstaltung bewerten</h3>
+        @using (Html.BeginForm("Create", "Rating", FormMethod.Post, new { @class = "form-inline" }))
+        {
+            @Html.Hidden("UserId", WebSecurity.CurrentUserId)
+            @Html.Hidden("HappeningId", Model.HappeningId)
+            <select id="Value" name="Value" class="input-sm">
+                <option value="" selected></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            
+            <button type="submit" class="btn btn-info" style="margin-top:5px;">bewerten</button>
+        }
+    </div>
 }

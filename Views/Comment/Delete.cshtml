@@ -4,6 +4,21 @@
     ViewBag.Title = "Delete";
 }
 
+Action: @TempData["action"]
+Controller: @TempData["controller"]
+Id: @TempData["id"]
+
+@{
+    // die Variablen müssen hier noch einmal explizit gespeichert werden
+    // damit sie beim POST nicht verloren gehen 
+    
+    TempData["action"] = TempData["action"];
+    TempData["controller"] = TempData["controller"];
+    TempData["id"] = TempData["id"]; 
+    }
+
+@Request.UrlReferrer
+
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>

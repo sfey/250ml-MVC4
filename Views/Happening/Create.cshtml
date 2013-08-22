@@ -4,6 +4,12 @@
     ViewBag.Title = "Create";
 }
 
+@ViewBag.Action
+
+
+
+
+
 <h2>Create</h2>
 
 @using (Html.BeginForm()) {
@@ -36,6 +42,14 @@
             @Html.ValidationMessageFor(model => model.EndDate)
         </div>
 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserId, "Owner")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("UserId", String.Empty)
+            @Html.ValidationMessageFor(model => model.UserId)
+        </div>
+
         <p>
             <input type="submit" value="Create" />
         </p>
@@ -47,5 +61,5 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/timepicker")
 }

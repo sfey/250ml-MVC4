@@ -30,6 +30,13 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.EndDate)
     </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Owner.UserName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Owner.UserName)
+    </div>
 </fieldset>
 @using (Html.BeginForm()) {
     <p>

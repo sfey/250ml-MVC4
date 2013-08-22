@@ -1,0 +1,103 @@
+﻿
+  @import url(http://fonts.googleapis.com/css?family=Noto+Sans);
+   
+
+  /* sticky border */
+
+  html, body {
+    height: 100%;
+  }
+  
+  #wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -60px; /* footer height */
+  }
+  
+  #push_top {
+    height: 20px;
+  }
+  
+  #push, #footer {
+    height: 50px;
+  }
+  
+  @media (max-width: 767px) {
+    #footer {
+      margin-left: -20px;
+      margin-right: -20px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }  
+
+
+  /* remove rounded corners */
+  
+  * {
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+    /* font-family: 'Noto Sans', sans-serif;        */
+  }
+
+
+  /* boxes */
+  
+  #all_events { 
+    background-color: #ffef00;
+    border-color: #fff886;
+  }
+  
+  #calendar {
+    background-color: #2E9217;
+    border-color: #39B71C;
+  }
+  
+  #your_events {
+    background-color: #008BDE;
+    border-color: #70B6DF;
+  }
+  
+  #free {
+    background-color: #DE3813;
+    border-color: #E06549;  
+  }
+  
+  #your_settings {
+    background-color: #710B14;
+    border-color: #723035;
+  }
+  
+  
+  /* misc */
+  
+  .box, .box:focus {
+    line-height: 45px;
+  text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    color: #CACBCC;
+    font-size: 12pt;
+    display: block;
+    border-width: 3px;
+    padding: 17px;
+  }
+  
+  #all_events:hover, #calendar:hover, #your_events:hover, #free:hover, #your_settings:hover {
+    text-decoration: none;
+    color: #000;
+    border-color: #000;
+  }
+  
+  #all_events:active, #calendar:active, #your_events:active, #free:active, #your_settings:active {
+    text-decoration: none;
+    color: #fff;
+    border-color: #fff;
+  }
+  
+  .blocksatz {
+    text-align:justify;
+    text-justify:inter-word;
+  }

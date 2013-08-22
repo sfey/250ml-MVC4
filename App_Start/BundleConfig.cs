@@ -8,6 +8,58 @@ namespace _250ml_MVC4_2
         // Weitere Informationen zu Bundling finden Sie unter "http://go.microsoft.com/fwlink/?LinkId=254725".
         public static void RegisterBundles(BundleCollection bundles)
         {
+            // Bundling trotz Debug aktivieren
+            //BundleTable.EnableOptimizations = true;
+
+            // Bundle für TimePicker
+            bundles.Add(
+                new ScriptBundle("~/bundles/timepicker")
+                    .Include(
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-ui-{version}.js",
+                        "~/Scripts/jquery.unobtrusive*",
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/jquery-ui-timepicker-addon.js",
+                        "~/Scripts/config/timepicker-addon.js",
+                        "~/Content/bootstrap/js/bootstrap.min.js"
+                    )
+            );
+
+            IItemTransform cssFixer = new CssRewriteUrlTransform();
+
+            bundles.Add(
+                new StyleBundle("~/Content/bootstrap/css")
+                    .Include(
+                        "~/Content/bootstrap/css/bootstrap.css",
+                        cssFixer
+                    )
+                    .Include(
+                        "~/Content/250ml.css"
+                    )
+            );
+
+            bundles.Add(
+               new ScriptBundle("~/bundles/bootstrap/js")
+                   .Include(
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Content/bootstrap/js/bootstrap.js"
+                   )
+            );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -23,21 +75,13 @@ namespace _250ml_MVC4_2
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css", "~/Content/jquery-ui-timepicker-addon.css"));
 
-            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
-                        "~/Content/themes/base/jquery.ui.core.css",
-                        "~/Content/themes/base/jquery.ui.resizable.css",
-                        "~/Content/themes/base/jquery.ui.selectable.css",
-                        "~/Content/themes/base/jquery.ui.accordion.css",
-                        "~/Content/themes/base/jquery.ui.autocomplete.css",
-                        "~/Content/themes/base/jquery.ui.button.css",
-                        "~/Content/themes/base/jquery.ui.dialog.css",
-                        "~/Content/themes/base/jquery.ui.slider.css",
-                        "~/Content/themes/base/jquery.ui.tabs.css",
-                        "~/Content/themes/base/jquery.ui.datepicker.css",
-                        "~/Content/themes/base/jquery.ui.progressbar.css",
-                        "~/Content/themes/base/jquery.ui.theme.css"));
+
+
+
+
+           
         }
     }
 }
