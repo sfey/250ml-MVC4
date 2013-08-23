@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace _250ml_MVC4_2.Models
 {
     public class Happening
     {
         public int HappeningId { get; set; }
+        [Required]
+        [StringLength(60,MinimumLength=10)]
         public string Name { get; set; }
+        [Required]
+        [DataType(DataType.DateTime)]
         public DateTime StartDate { get; set; }
+        [Required]
+        [DataType(DataType.DateTime)]
         public DateTime EndDate { get; set; }
 
         public virtual List<Comment> Comments { get; set; }

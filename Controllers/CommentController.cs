@@ -18,41 +18,11 @@ namespace _250ml_MVC4_2.Controllers
     {
         private UsersContext db = new UsersContext();
 
-        //
-        // GET: /Comment/
-
-        //public ActionResult Index()
-        //{
-        //    var comments = db.Comments.Include(c => c.UserProfile).Include(c => c.Happening);
-        //    return View(comments.ToList());
-        //}
-
-        //
-        // GET: /Comment/Details/5
-
-        //public ActionResult Details(int id = 0)
-        //{
-        //    Comment comment = db.Comments.Find(id);
-        //    if (comment == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(comment);
-        //}
-
-        //
-        // GET: /Comment/Create
-
-        //public ActionResult Create()
-        //{
-        //    ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName");
-        //    ViewBag.HappeningId = new SelectList(db.Happenings, "HappeningId", "Name");
-        //    return View();
-        //}
-
-        //
-        // POST: /Comment/Create
-
+        /*
+         * Speichert einen Kommentar zu einer Veranstaltung
+         * Wird vom Happening-Controller aufgerufen, wenn
+         * ein Benutzer einen Kommentar postet
+         */
         [HttpPost]
         [Authorize]
         public ActionResult Create(Comment comment)
@@ -67,11 +37,12 @@ namespace _250ml_MVC4_2.Controllers
 
             ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName", comment.UserId);
             ViewBag.HappeningId = new SelectList(db.Happenings, "HappeningId", "Name", comment.HappeningId);
-            return View(comment);
+            return RedirectToAction(ReferrerHelper.ReferrerAction(), ReferrerHelper.ReferrerController(), new { Id = ReferrerHelper.ReferrerId() });
         }
 
-        //
-        // GET: /Comment/Edit/5
+        /*
+         * Zeigt das Formular zum editieren eines Kommentars an
+         */
         [Authorize]
         public ActionResult Edit(int id = 0)
         {
@@ -98,9 +69,9 @@ namespace _250ml_MVC4_2.Controllers
             return View(comment);
         }
 
-        //
-        // POST: /Comment/Edit/5
-
+        /*
+         * Speichert die Änderungen des Kommentars
+         */
         [HttpPost]
         [Authorize]
         public ActionResult Edit(Comment comment)
@@ -113,7 +84,6 @@ namespace _250ml_MVC4_2.Controllers
                     return RedirectToAction(ReferrerHelper.ReferrerAction(), ReferrerHelper.ReferrerController(), new { Id = ReferrerHelper.ReferrerId() });
                 }
             }
-
 
             if (ModelState.IsValid)
             {
@@ -131,8 +101,9 @@ namespace _250ml_MVC4_2.Controllers
             return View(comment);
         }
 
-        //
-        // GET: /Comment/Delete/5
+        /*
+         * Zeigt das Formular zum löschen eines Kommentars
+         */
         [Authorize(Roles="Administrator")]
         public ActionResult Delete(int id = 0)
         {
@@ -149,9 +120,9 @@ namespace _250ml_MVC4_2.Controllers
             return View(comment);
         }
 
-        //
-        // POST: /Comment/Delete/5
-
+        /*
+         * Löscht einen Kommentar
+         */
         [HttpPost, ActionName("Delete")]
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteConfirmed(int id)

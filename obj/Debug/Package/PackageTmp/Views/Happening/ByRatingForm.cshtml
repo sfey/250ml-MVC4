@@ -1,0 +1,16 @@
+﻿<div class="well well-sm">
+    <h4>Veranstaltungen filtern</h4>
+    @using (Html.BeginForm("ByRating", "Happening", FormMethod.Post, new { @class = "form-inline" }))
+    {
+        <select id="Id" name="Id" class="input-sm">
+                 <option selected value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                </select>
+         <button type="submit" class="btn btn-info" style="margin-top:5px;">filtern</button>
+    }
+
+    </div>
+

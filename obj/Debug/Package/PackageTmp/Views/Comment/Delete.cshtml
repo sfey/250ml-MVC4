@@ -1,0 +1,47 @@
+﻿@model _250ml_MVC4_2.Models.Comment
+
+@{
+    // die Variablen müssen hier noch einmal explizit gespeichert werden
+    // damit sie beim POST nicht verloren gehen 
+
+    var ReferrerAction = TempData["action"] as string;
+    var ReferrerController = TempData["controller"] as string;
+    var ReferrerId = Convert.ToInt32(TempData["id"]);
+
+    TempData["action"] = ReferrerAction;
+    TempData["controller"] = ReferrerController;
+    TempData["id"] = ReferrerId;
+}
+
+<h2>Kommentar löschen</h2>
+<h3>Sind sie sich sicher?</h3>
+
+@using (Html.BeginForm("Delete","Comment",FormMethod.Post,null)) {
+    <p>
+        <button class="btn btn-danger" type="submit">löschen</button>
+        @Html.ActionLink("abbrechen", ReferrerAction, ReferrerController, new { Id = ReferrerId }, new { @class = "btn btn-info" })
+    </p>
+}
+
+<fieldset>
+    <legend>Kommentar-Details</legend>
+
+    <label>Text</label>
+    <p>@Model.Content</p>
+
+    <label>Erstellungsdatum</label>
+    <p>am @Model.CreationDate.ToString("dd/MM/yy") um
+     @Model.CreationDate.ToString("HH:mm") Uhr</p>
+
+    <label>Verfasser</label>
+    <p>@Model.UserProfile.UserName</p>
+
+    <label>Betroffene Veranstaltung</label>
+    <p>@Model.Happening.Name</p>
+</fieldset>
+
+@section scripts
+{
+    <script src="/Scripts/jquery.raty.min.js"></script>
+    <script src="/Scripts/config/raty.js"></script>
+}

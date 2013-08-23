@@ -9,17 +9,29 @@ using _250ml_MVC4_2.Helpers;
 
 namespace _250ml_MVC4_2.Controllers
 {
+    /*
+     * CRUD-Funktionalität für das Happening-Model
+     * * Controller für Happening View
+     */
     [InitializeSimpleMembership]
     public class HappeningController : Controller
     {
         private UsersContext db = new UsersContext();
 
+        /*
+         *  Gibt eine Liste aller Veranstaltungen zurück (Read)
+         *  Aufrufbar für alle Besucher der Webseite
+         */ 
         public ActionResult Index()
         {
             var happenings = db.Happenings.Include(h => h.Owner);
             return View(happenings.ToList());
         }
 
+        /*
+         * Gibt eine Liste der eigenen Veranstaltungen zurück
+         * Abrufbar für die Rolle Verwalter
+         */
         [Authorize(Roles = "Verwalter")]
         public ActionResult Own()
         {
@@ -30,6 +42,10 @@ namespace _250ml_MVC4_2.Controllers
             return View(OwnHappenings.ToList());
         }
 
+        /*
+         * Gibt eine Liste aller Veranstaltungen mit einer Mindestbewertung zurück
+         * Abrufbar für alle Besucher der Webseite
+         */
         public ActionResult ByRating(int id = 0)
         {
             if (id == 0) {
@@ -41,6 +57,9 @@ namespace _250ml_MVC4_2.Controllers
             return View(happenings.ToList());
         }
 
+        /*
+         * Gibt eine Detail-Ansicht für eine bestimmte Veranstaltung zurück
+         */
         public ActionResult Details(int id = 0)
         {
             Happening happening = db.Happenings.Find(id);
@@ -52,6 +71,9 @@ namespace _250ml_MVC4_2.Controllers
             return View(happening);
         }
 
+        /*
+         * Zeigt das Formular zum anlegen einer neuen Veranstaltung an
+         */
         [Authorize(Roles = "Verwalter,Administrator")]
         public ActionResult Create()
         {
@@ -62,6 +84,9 @@ namespace _250ml_MVC4_2.Controllers
             return View();
         }
 
+        /*
+         * Legt eine neue Veranstaltung an
+         */
         [HttpPost]
         [Authorize(Roles = "Verwalter,Administrator")]
         public ActionResult Create(Happening happening)
@@ -77,6 +102,9 @@ namespace _250ml_MVC4_2.Controllers
             return View(happening);
         }
 
+        /*
+         * Zeigt das Formular zum Bearbeiten einer Veranstaltung an
+         */
         [Authorize(Roles = "Verwalter,Administrator")]
         public ActionResult Edit(int id = 0)
         {
@@ -103,6 +131,9 @@ namespace _250ml_MVC4_2.Controllers
             return View(happening);
         }
 
+        /*
+         * Speichert die Änderungen an einern Veranstaltung
+         */
         [HttpPost]
         [Authorize(Roles = "Verwalter,Administrator")]
         public ActionResult Edit(Happening happening)
@@ -128,6 +159,9 @@ namespace _250ml_MVC4_2.Controllers
             return View(happening);
         }
 
+        /*
+         * Zeigt das Formular zum löschen einer Veranstaltung an
+         */
         [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int id = 0)
         {
@@ -141,6 +175,9 @@ namespace _250ml_MVC4_2.Controllers
             return View(happening);
         }
 
+        /* 
+         * Löscht eine Veranstaltung
+         */
         [HttpPost, ActionName("Delete")]
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteConfirmed(int id)
@@ -151,24 +188,6 @@ namespace _250ml_MVC4_2.Controllers
             return RedirectToAction("Index");
         }
 
-        //[HttpPost]
-        //[Authorize]
-        //public ActionResult Rate(Rating rating)
-        //{
-        //    db.Ratings.Add(rating);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Details", new { id = rating.HappeningId });
-        //}
-
-        //[HttpPost]
-        //[Authorize]
-        //public ActionResult Commentate(Comment comment)
-        //{
-        //    db.Comments.Add(comment);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Details", new { id = comment.HappeningId });
-        //}
-        
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

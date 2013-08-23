@@ -1,0 +1,15 @@
+﻿@model _250ml_MVC4_2.Models.LocalPasswordModel
+
+<h2>Konto verwalten</h2>
+
+@if (@ViewBag.StatusMessage != "")
+{
+    <div class="alert alert-success">@ViewBag.StatusMessage</div>
+}
+
+
+@Html.Partial("_ChangePasswordPartial")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

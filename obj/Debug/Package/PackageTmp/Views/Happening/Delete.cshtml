@@ -1,0 +1,43 @@
+﻿@model _250ml_MVC4_2.Models.Happening
+
+<h2>Veranstaltung löschen</h2>
+<h3>Sind sie sich sicher?</h3>
+
+@using (Html.BeginForm()) {
+    <p>
+        <button class="btn btn-danger" type="submit">löschen</button>
+        @Html.ActionLink("abbrechen", "Index", null, new { @class="btn btn-info" })
+    </p>
+}
+
+<fieldset>
+    <legend>Veranstaltungs-Details</legend>
+
+    <label>Veranstaltungsname</label>
+    <p>@Model.Name</p>
+
+    <label>Zeitraum</label>
+    <p>von @Model.StartDate.ToString("dd/MM/yy, HH:mm") Uhr<br />
+    bis @Model.EndDate.ToString("dd/MM/yy, HH:mm") Uhr</p>
+
+    <label>Veranstalter</label>
+    <p>@Model.Owner.UserName</p>
+
+    <label>Durchschnittliche Bewertung</label>
+    (bei @Model.Ratings.Count 
+        @if(@Model.Ratings.Count>1)
+        {
+            @:Bewertungen)
+        }
+        else
+        {
+            @:Bewertung)
+        }
+    <div id="star" style="margin-bottom: 20px;" data-score="@Model.AverageRating()"></div> 
+</fieldset>
+
+@section scripts
+{
+    <script src="/Scripts/jquery.raty.min.js"></script>
+    <script src="/Scripts/config/raty.js"></script>
+}
